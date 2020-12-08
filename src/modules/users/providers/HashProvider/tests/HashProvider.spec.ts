@@ -45,4 +45,14 @@ describe('HashProvider', () => {
       hashProvider.compare({ hashed, payload: wrongPayload }),
     ).resolves.toBeFalsy();
   });
+
+  it('should return true for the right payload', async () => {
+    const payload = '123456';
+
+    const hashed = await hashProvider.generateHash({ payload, salt });
+
+    await expect(
+      hashProvider.compare({ hashed, payload }),
+    ).resolves.toBeTruthy();
+  });
 });
