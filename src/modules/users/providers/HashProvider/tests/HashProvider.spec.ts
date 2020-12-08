@@ -25,4 +25,14 @@ describe('HashProvider', () => {
 
     expect(hashed.includes(salt)).toBeTruthy();
   });
+
+  it('should hash the given payload', async () => {
+    const salt = await hashProvider.generateSalt();
+
+    const payload = '123456';
+
+    const hashed = await hashProvider.generateHash({ payload, salt });
+
+    expect(payload !== hashed).toBeTruthy();
+  });
 });
