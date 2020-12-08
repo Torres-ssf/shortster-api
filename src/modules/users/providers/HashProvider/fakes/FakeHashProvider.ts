@@ -9,8 +9,8 @@ export class FakeHashProvider implements IHashProvider {
     return crypto.randomBytes(10).toString('hex');
   }
 
-  generateHash(generateHashDTO: GenerateHashDTO): Promise<string> {
-    throw new Error('Method not implemented.');
+  async generateHash({ payload, salt }: GenerateHashDTO): Promise<string> {
+    return payload.concat(salt);
   }
 
   compare(compareHashDTO: CompareHashDTO): Promise<boolean> {
