@@ -1,8 +1,7 @@
 import crypto from 'crypto';
-import { CompareHashDTO } from '../dto/CompareHashDTO';
-
-import { GenerateHashDTO } from '../dto/GenerateHashDTO';
 import { IHashProvider } from '../models/IHashProvider';
+import { CompareHashDTO } from '../dto/CompareHashDTO';
+import { GenerateHashDTO } from '../dto/GenerateHashDTO';
 
 export class FakeHashProvider implements IHashProvider {
   async generateSalt(): Promise<string> {
@@ -13,7 +12,7 @@ export class FakeHashProvider implements IHashProvider {
     return payload.concat(salt);
   }
 
-  compare(compareHashDTO: CompareHashDTO): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async compare({ hashed, payload }: CompareHashDTO): Promise<boolean> {
+    return hashed.includes(payload);
   }
 }
