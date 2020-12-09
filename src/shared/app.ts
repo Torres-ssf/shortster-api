@@ -1,10 +1,19 @@
-import express from 'express';
+import 'reflect-metadata';
+
+import './container';
+
+import express, { json } from 'express';
+
+import { expressErrorMiddleware } from './middlewares/expressErrorMiddleware';
+
 import { appRoutes } from './routes';
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 
 app.use(appRoutes);
+
+app.use(expressErrorMiddleware);
 
 export { app };
