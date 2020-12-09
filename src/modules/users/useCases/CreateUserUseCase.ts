@@ -2,12 +2,12 @@ import { v4 } from 'uuid';
 import AppError from '../../../shared/errors/AppError';
 import { User } from '../entities/User';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
-import { UsersRepository } from '../repositories/UsersRepository';
+import { IUsersRepository } from '../repositories/IUsersRepository';
 import { CreateUserDTO } from './CreateUserDTO';
 
 export class CreateUserUseCase {
   constructor(
-    private usersRepository: UsersRepository,
+    private usersRepository: IUsersRepository,
     private hashProvider: IHashProvider,
   ) {}
 
@@ -39,9 +39,9 @@ export class CreateUserUseCase {
     try {
       return this.usersRepository.save(user);
     } catch (err) {
-      throw new AppError('Error occurred while trying to create new user.');
+      throw new AppError(
+        err.message || 'Error occurred while trying to create new user.',
+      );
     }
-
-    return new User();
   }
 }
