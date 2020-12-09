@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import './database/index';
+
 import './container';
 
 import express, { json } from 'express';
