@@ -3,9 +3,9 @@ import './providers';
 import { container } from 'tsyringe';
 
 import { IUsersRepository } from './repositories/IUsersRepository';
-import { FakeUsersRepository } from './repositories/fakes/FakeUsersRepository';
+import { TypeORMUsersRepository } from './repositories/implementations/TypeORMUsersRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
-  FakeUsersRepository,
+  TypeORMUsersRepository,
 );
