@@ -15,7 +15,7 @@ export class CreateShortsterUseCase {
   ) {}
 
   async execute(createShortsterDTO: CreateShortsterDTO): Promise<Shortster> {
-    const { url } = createShortsterDTO;
+    const { url, user_id } = createShortsterDTO;
 
     let { code } = createShortsterDTO;
 
@@ -35,6 +35,17 @@ export class CreateShortsterUseCase {
       throw new AppError('webpage does not exist');
     }
 
-    return new Shortster();
+    const shortster = new Shortster();
+
+    Object.assign(shortster, {
+      id: v4(),
+      code,
+      url,
+      user_id: user_id || null,
+    });
+
+    await this.shortsterRepository.save(shortster);
+
+    return shortster;
   }
 }
