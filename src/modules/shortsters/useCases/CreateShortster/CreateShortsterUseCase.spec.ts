@@ -64,4 +64,14 @@ describe('CreateShortsterUseCase', () => {
       url: googleUrl,
     });
   });
+
+  it('should be able to create new shortster without providing a chosen code', async () => {
+    await expect(
+      createShortsterUseCase.execute({
+        url: facebookUrl,
+      }),
+    ).resolves.toMatchObject({
+      url: facebookUrl,
+    });
+  });
 });
