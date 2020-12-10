@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { v4 } from 'uuid';
+import axios from 'axios';
 import { AppError } from '@shared/errors/AppError';
 import { generateShortsterCode } from '@shared/utils/generateShortsterCode';
 import { Shortster } from '../../entities/Shortster';
@@ -14,6 +15,8 @@ export class CreateShortsterUseCase {
   ) {}
 
   async execute(createShortsterDTO: CreateShortsterDTO): Promise<Shortster> {
+    const { url } = createShortsterDTO;
+
     let { code } = createShortsterDTO;
 
     if (code) {
@@ -25,6 +28,13 @@ export class CreateShortsterUseCase {
     } else {
       code = generateShortsterCode();
     }
+
+    try {
+      await axios.get(url);
+    } catch (err) {
+      throw new AppError('webpage does not exist');
+    }
+
     return new Shortster();
   }
 }
