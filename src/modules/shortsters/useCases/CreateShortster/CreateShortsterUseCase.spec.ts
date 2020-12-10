@@ -2,6 +2,7 @@ import { Shortster } from '@modules/shortsters/entities/Shortster';
 import { FakeShortstersRepository } from '@modules/shortsters/repositories/fakes/FakeShortsterRepository';
 import { generateShortsterCode } from '@shared/utils/generateShortsterCode';
 import { v4 } from 'uuid';
+import axios from 'axios';
 import { CreateShortsterUseCase } from './CreateShortsterUseCase';
 
 describe('CreateShortsterUseCase', () => {
@@ -23,7 +24,7 @@ describe('CreateShortsterUseCase', () => {
     Object.assign(shortster, {
       id: v4(),
       code: generateShortsterCode(),
-      url: 'www.google.com',
+      url: 'https://www.google.com',
       last_access: new Date(),
     });
 
@@ -32,8 +33,17 @@ describe('CreateShortsterUseCase', () => {
     await expect(
       createShortsterUseCase.execute({
         code: shortster.code,
-        url: 'www.facebook.com',
+        url: 'https://www.facebook.com',
       }),
     ).rejects.toHaveProperty('message', 'shortster code already in use');
+  });
+
+  it('should return an error if the url is from a non existent webpage', async () => {
+    await expect(
+      createShortsterUseCase.execute({
+        code: 'abc123',
+        url: 'http://www.nonexistentwebpage.com',
+      }),
+    ).rejects.toHaveProperty('message', 'webpage does not exist');
   });
 });
