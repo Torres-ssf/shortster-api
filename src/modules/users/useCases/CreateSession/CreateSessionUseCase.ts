@@ -14,11 +14,20 @@ export class CreateSessionUseCase {
   ) {}
 
   async execute(createSession: CreateSessionDTO): Promise<void> {
-    const { email } = createSession;
+    const { email, password } = createSession;
 
     const userExists = await this.usersRepository.findByEmail(email);
 
     if (!userExists) {
+      throw new AppError('wrong email/password combination', 403);
+    }
+
+    const passwordMatch = await this.hashProvider.compare({
+      payload: password,
+      hashed: userExists.password,
+    });
+
+    if (!passwordMatch) {
       throw new AppError('wrong email/password combination', 403);
     }
   }
