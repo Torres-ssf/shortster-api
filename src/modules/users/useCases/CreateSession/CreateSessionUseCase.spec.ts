@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 
 import { AppError } from '@shared/errors/AppError';
+import { v4 } from 'uuid';
 import { User } from '../../entities/User';
 import { FakeHashProvider } from '../../providers/HashProvider/fakes/FakeHashProvider';
 import { FakeUsersRepository } from '../../repositories/fakes/FakeUsersRepository';
-import { CreateSessionDTO } from './CreateSessionDTO';
 import { CreateSessionUseCase } from './CreateSessionUseCase';
 
 describe('CreateSessionUseCase', () => {
@@ -46,6 +46,7 @@ describe('CreateSessionUseCase', () => {
     const user = new User();
 
     Object.assign(user, {
+      id: v4(),
       name: 'Paul',
       email: 'paul@email.com',
       password: 'salt123456',
@@ -60,5 +61,27 @@ describe('CreateSessionUseCase', () => {
         password: 'wrong-password',
       }),
     ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should authenticate user when right credentials are given and return jwt token', async () => {
+    const user = new User();
+
+    Object.assign(user, {
+      id: v4(),
+      name: 'Paul',
+      email: 'paul@email.com',
+      password: 'salt123456',
+      salt: 'salt',
+    });
+
+    await fakeUsersRepository.save(user);
+
+    const response = await createSessionUseCase.execute({
+      email: user.email,
+      password: user.password,
+    });
+
+    expect(response.user).toStrictEqual(user);
+    expect(Object.keys(response)).toContain('token');
   });
 });
