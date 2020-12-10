@@ -44,8 +44,12 @@ export class CreateShortsterUseCase {
       user_id: user_id || null,
     });
 
-    await this.shortsterRepository.save(shortster);
-
-    return shortster;
+    try {
+      return this.shortsterRepository.save(shortster);
+    } catch (err) {
+      throw new AppError(
+        err.message || 'error occurred while trying to create new shortster.',
+      );
+    }
   }
 }
