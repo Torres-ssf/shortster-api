@@ -1,7 +1,7 @@
 import { Shortster } from '../../entities/Shortster';
-import { IShortstersRepository } from '../IShortstersRepository';
+import { IShortsterRepository } from '../IShortsterRepository';
 
-export class FakeShortstersRepository implements IShortstersRepository {
+export class FakeShortstersRepository implements IShortsterRepository {
   private shortsters: Shortster[] = [];
 
   async findByCode(code: string): Promise<Shortster | undefined> {
