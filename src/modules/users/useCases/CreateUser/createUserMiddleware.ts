@@ -1,8 +1,8 @@
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from '../../../../shared/errors/AppError';
-import { extractValidationErrors } from '../../../../shared/utils/formatValidationError';
+import { AppError } from '@shared/errors/AppError';
+import { extractValidationErrors } from '@shared/utils/formatValidationError';
 import { CreateUserDTO } from './CreateUserDTO';
 
 export async function createUserMiddleware(

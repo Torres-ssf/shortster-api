@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { AppError } from '../../../../shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 import { User } from '../../entities/User';
 import { FakeHashProvider } from '../../providers/HashProvider/fakes/FakeHashProvider';
 import { FakeUsersRepository } from '../../repositories/fakes/FakeUsersRepository';
