@@ -41,4 +41,24 @@ describe('CreateSessionUseCase', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should return an error if given password does not match with user password', async () => {
+    const user = new User();
+
+    Object.assign(user, {
+      name: 'Paul',
+      email: 'paul@email.com',
+      password: 'salt123456',
+      salt: 'salt',
+    });
+
+    await fakeUsersRepository.save(user);
+
+    await expect(
+      createSessionUseCase.execute({
+        email: user.email,
+        password: 'wrong-password',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
