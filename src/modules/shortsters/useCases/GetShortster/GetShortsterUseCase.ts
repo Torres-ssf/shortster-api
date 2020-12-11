@@ -17,6 +17,14 @@ export class GetShortsterUseCase {
       throw new AppError('no shortster found for the given id');
     }
 
-    return new Shortster();
+    shortster.times_accessed += 1;
+
+    try {
+      return this.shortsterRepository.save(shortster);
+    } catch (err) {
+      throw new AppError(
+        err.message || 'error occurred while trying to get shortster.',
+      );
+    }
   }
 }
