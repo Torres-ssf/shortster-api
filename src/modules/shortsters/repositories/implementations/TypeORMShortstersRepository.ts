@@ -1,8 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 import { Shortster } from '../../entities/Shortster';
-import { IShortstersRepository } from '../IShortstersRepository';
+import { IShortsterRepository } from '../IShortsterRepository';
 
-export class TypeORMShortstersRepository implements IShortstersRepository {
+export class TypeORMShortstersRepository implements IShortsterRepository {
   private ormRepository: Repository<Shortster>;
 
   constructor() {

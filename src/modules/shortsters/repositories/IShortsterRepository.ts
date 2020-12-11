@@ -1,6 +1,6 @@
 import { Shortster } from '../entities/Shortster';
 
-export interface IShortstersRepository {
+export interface IShortsterRepository {
   findByCode(code: string): Promise<Shortster | undefined>;
   save(shortster: Shortster): Promise<Shortster>;
 }
