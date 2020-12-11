@@ -102,4 +102,19 @@ describe('CreateShortsterUseCase', () => {
     expect(shortster2).toHaveProperty('user_id');
     expect(shortster2.user_id).toBe(userId);
   });
+
+  it('should have last_access, created_at, updated_at properties all with the current time', async () => {
+    const shortster = await createShortsterUseCase.execute({
+      url: facebookUrl,
+    });
+
+    expect(shortster).toHaveProperty('last_access');
+    expect(shortster).toHaveProperty('created_at');
+    expect(shortster).toHaveProperty('updated_at');
+
+    const { last_access, created_at, updated_at } = shortster;
+
+    expect(last_access).toBe(created_at);
+    expect(created_at).toBe(updated_at);
+  });
 });
