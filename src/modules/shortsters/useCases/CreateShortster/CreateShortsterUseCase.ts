@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 import { AppError } from '@shared/errors/AppError';
 import { generateShortsterCode } from '@shared/utils/generateShortsterCode';
+import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { Shortster } from '../../entities/Shortster';
 import { IShortsterRepository } from '../../repositories/IShortsterRepository';
 import { CreateShortsterDTO } from './CreateShortsterDTO';
@@ -10,6 +11,8 @@ import { CreateShortsterDTO } from './CreateShortsterDTO';
 @injectable()
 export class CreateShortsterUseCase {
   constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
     @inject('ShortsterRepository')
     private shortsterRepository: IShortsterRepository,
   ) {}
@@ -33,6 +36,14 @@ export class CreateShortsterUseCase {
       await axios.get(url);
     } catch (err) {
       throw new AppError('webpage does not exist');
+    }
+
+    if (user_id) {
+      const existentUser = await this.usersRepository.findById(user_id);
+
+      if (!existentUser) {
+        throw new AppError('no user was found for the given user id');
+      }
     }
 
     const shortster = new Shortster();
