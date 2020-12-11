@@ -1,5 +1,6 @@
 import 'reflect-metadata';
-
+import { isAfter, addHours } from 'date-fns';
+import { set } from 'mockdate';
 import { FakeShortstersRepository } from '@modules/shortsters/repositories/fakes/FakeShortsterRepository';
 
 import { FakeUsersRepository } from '@modules/users/repositories/fakes/FakeUsersRepository';
@@ -46,5 +47,19 @@ describe('GetShortsterUseCase', () => {
     const updatedShortester = await getShortsterUseCase.execute(code);
 
     expect(updatedShortester.times_accessed).toBe(times_accessed + 1);
+  });
+
+  it('should update last_access value to be the current date', async () => {
+    const { code, last_access } = await createShortsterUseCase.execute({
+      url: googleUrl,
+    });
+
+    const createdTime = new Date(last_access);
+
+    set(addHours(last_access, 1));
+
+    const updatedShortester = await getShortsterUseCase.execute(code);
+
+    expect(isAfter(updatedShortester.last_access, createdTime)).toBeTruthy();
   });
 });
