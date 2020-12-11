@@ -19,6 +19,8 @@ export class GetShortsterUseCase {
 
     shortster.times_accessed += 1;
 
+    shortster.last_access = new Date();
+
     try {
       return this.shortsterRepository.save(shortster);
     } catch (err) {
