@@ -83,4 +83,23 @@ describe('CreateShortsterUseCase', () => {
     expect(shortster).toHaveProperty('times_accessed');
     expect(shortster.times_accessed).toBe(0);
   });
+
+  it('should create a shortster with user_id when is available', async () => {
+    const userId = v4();
+
+    const shortster1 = await createShortsterUseCase.execute({
+      url: facebookUrl,
+    });
+
+    const shortster2 = await createShortsterUseCase.execute({
+      url: googleUrl,
+      user_id: userId,
+    });
+
+    expect(shortster1).toHaveProperty('user_id');
+    expect(shortster1.user_id).toBe(null);
+
+    expect(shortster2).toHaveProperty('user_id');
+    expect(shortster2.user_id).toBe(userId);
+  });
 });
