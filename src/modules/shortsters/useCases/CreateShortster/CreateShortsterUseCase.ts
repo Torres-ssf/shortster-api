@@ -42,6 +42,7 @@ export class CreateShortsterUseCase {
       code,
       url,
       user_id: user_id || null,
+      times_accessed: 0,
     });
 
     try {
