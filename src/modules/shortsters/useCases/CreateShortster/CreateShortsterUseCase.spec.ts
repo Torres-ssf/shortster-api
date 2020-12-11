@@ -74,4 +74,13 @@ describe('CreateShortsterUseCase', () => {
       url: facebookUrl,
     });
   });
+
+  it('should create a shortster with times_accessed property with the value of 0', async () => {
+    const shortster = await createShortsterUseCase.execute({
+      url: facebookUrl,
+    });
+
+    expect(shortster).toHaveProperty('times_accessed');
+    expect(shortster.times_accessed).toBe(0);
+  });
 });
