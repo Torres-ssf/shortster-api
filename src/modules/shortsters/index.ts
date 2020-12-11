@@ -1,9 +1,9 @@
 import { container } from 'tsyringe';
 
 import { IShortsterRepository } from './repositories/IShortsterRepository';
-import { FakeShortstersRepository } from './repositories/fakes/FakeShortsterRepository';
+import { TypeORMShortstersRepository } from './repositories/implementations/TypeORMShortstersRepository';
 
 container.registerSingleton<IShortsterRepository>(
   'ShortsterRepository',
-  FakeShortstersRepository,
+  TypeORMShortstersRepository,
 );
