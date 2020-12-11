@@ -37,12 +37,17 @@ export class CreateShortsterUseCase {
 
     const shortster = new Shortster();
 
+    const currentTime = new Date();
+
     Object.assign(shortster, {
       id: v4(),
       code,
       url,
       user_id: user_id || null,
       times_accessed: 0,
+      last_access: currentTime,
+      created_at: currentTime,
+      updated_at: currentTime,
     });
 
     try {
