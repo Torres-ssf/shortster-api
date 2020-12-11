@@ -1,1 +1,2 @@
-import '../../modules/users';
+import '@modules/users';
+import '@modules/shortsters/';
