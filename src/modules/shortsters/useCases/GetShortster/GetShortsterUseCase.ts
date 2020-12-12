@@ -17,7 +17,7 @@ export class GetShortsterUseCase {
       throw new AppError('no shortster found for the given id');
     }
 
-    shortster.times_accessed += 1;
+    shortster.times_accessed = Number(shortster.times_accessed) + 1;
 
     shortster.last_access = new Date();
 
