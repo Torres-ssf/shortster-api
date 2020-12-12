@@ -86,7 +86,7 @@ describe('CreateShortsterUseCase', () => {
     });
   });
 
-  it('should create a shortster with times_accessed property with the value of 0', async () => {
+  it('new shortsters should have times_accessed property with the value of 0', async () => {
     const shortster = await createShortsterUseCase.execute({
       url: facebookUrl,
     });
@@ -95,7 +95,7 @@ describe('CreateShortsterUseCase', () => {
     expect(shortster.times_accessed).toBe(0);
   });
 
-  it('should create a shortster with user_id when is available', async () => {
+  it('should assign new shortster to user when user id is given', async () => {
     const user = new User();
 
     Object.assign(user, {
@@ -126,7 +126,7 @@ describe('CreateShortsterUseCase', () => {
     expect(shortster2.user_id).toBe(user.id);
   });
 
-  it('should return new shortster with last_access, created_at, updated_at properties with the current time', async () => {
+  it('new shortster should have last_access, created_at, updated_at properties with the current time', async () => {
     const shortster = await createShortsterUseCase.execute({
       url: facebookUrl,
     });
