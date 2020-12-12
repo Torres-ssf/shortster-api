@@ -1,4 +1,5 @@
 import { User } from '../entities/User';
+import { CreateUserDTO } from '../useCases/CreateUser/CreateUserDTO';
 
 export interface IUsersRepository {
   create(createUserDTO: CreateUserDTO): Promise<User>;
