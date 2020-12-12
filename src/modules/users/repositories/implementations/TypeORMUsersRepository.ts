@@ -9,6 +9,10 @@ export class TypeORMUsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
+  async findById(id: string): Promise<User | undefined> {
+    return this.ormRepository.findOne(id);
+  }
+
   async findByEmail(email: string): Promise<User | undefined> {
     return this.ormRepository.findOne({ where: { email } });
   }
