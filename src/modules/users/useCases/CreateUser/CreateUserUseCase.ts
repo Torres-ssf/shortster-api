@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { v4 } from 'uuid';
+
 import { AppError } from '@shared/errors/AppError';
 import { User } from '../../entities/User';
 import { IHashProvider } from '../../providers/HashProvider/models/IHashProvider';
@@ -16,7 +16,7 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(createUser: CreateUserDTO): Promise<User> {
-    const { email, password } = createUser;
+    const { name, email, password } = createUser;
 
     const userExists = await this.usersRepository.findByEmail(email);
 
@@ -24,24 +24,14 @@ export class CreateUserUseCase {
       throw new AppError('Email already taken');
     }
 
-    const salt = await this.hashProvider.generateSalt();
-
-    const hashedPassword = await this.hashProvider.generateHash({
-      payload: password,
-      salt,
-    });
-
-    const user = new User();
-
-    Object.assign(user, {
-      id: v4(),
-      ...createUser,
-      password: hashedPassword,
-      salt,
-    });
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     try {
-      return this.usersRepository.save(user);
+      return this.usersRepository.create({
+        name,
+        email,
+        password: hashedPassword,
+      });
     } catch (err) {
       throw new AppError(
         err.message || 'Error occurred while trying to create new user.',
