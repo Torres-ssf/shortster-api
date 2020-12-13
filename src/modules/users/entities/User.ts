@@ -24,10 +24,6 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column()
-  @Exclude()
-  salt: string;
-
   @CreateDateColumn()
   created_at: Date;
 
