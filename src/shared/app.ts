@@ -1,3 +1,5 @@
+import cors from 'cors';
+
 import 'dotenv/config';
 
 import 'reflect-metadata';
@@ -13,6 +15,8 @@ import { expressErrorMiddleware } from './middlewares/expressErrorMiddleware';
 import { appRoutes } from './routes';
 
 const app = express();
+
+app.use(cors());
 
 app.use(json());
 
