@@ -39,4 +39,14 @@ describe('ShortsterStatsUseCase', () => {
       getShortsterUseCase.execute('noExistentShortsterCode'),
     ).rejects.toHaveProperty('message', 'no shortster found for the given id');
   });
+
+  it('created_at, last_access should be typeof Date', async () => {
+    const { code } = await createShortsterUseCase.execute({ url: googleUrl });
+
+    const resp = await getShortsterUseCase.execute(code);
+
+    expect(resp).toHaveProperty('created_at');
+    expect(resp).toHaveProperty('last_access');
+    expect(resp).toHaveProperty('times_accessed');
+  });
 });
