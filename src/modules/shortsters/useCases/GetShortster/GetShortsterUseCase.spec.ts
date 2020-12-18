@@ -39,7 +39,7 @@ describe('GetShortsterUseCase', () => {
     });
   });
 
-  it('should increase by one shortster times_accessed property every time a shortster is accessed', async () => {
+  it('should increase by one times_accessed property every time a shortster is accessed', async () => {
     const { code, times_accessed } = await createShortsterUseCase.execute({
       url: googleUrl,
     });
@@ -49,7 +49,7 @@ describe('GetShortsterUseCase', () => {
     expect(updatedShortester.times_accessed).toBe(times_accessed + 1);
   });
 
-  it('should update last_access value to be the current date', async () => {
+  it('should update last_access value every time a shortster is accessed', async () => {
     const { code, last_access } = await createShortsterUseCase.execute({
       url: googleUrl,
     });
@@ -61,5 +61,15 @@ describe('GetShortsterUseCase', () => {
     const updatedShortester = await getShortsterUseCase.execute(code);
 
     expect(isAfter(updatedShortester.last_access, createdTime)).toBeTruthy();
+  });
+
+  it('should return a shortster for the provided code', async () => {
+    const { code } = await createShortsterUseCase.execute({
+      url: googleUrl,
+    });
+
+    const shortster = await getShortsterUseCase.execute(code);
+
+    expect(shortster.code).toBe(code);
   });
 });
