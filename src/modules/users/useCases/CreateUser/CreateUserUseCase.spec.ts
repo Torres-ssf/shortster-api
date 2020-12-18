@@ -12,6 +12,12 @@ describe('CreateUserUseCase', () => {
 
   let fakeHashProvider: FakeHashProvider;
 
+  const name = 'Paul Airon';
+
+  const email = 'paul@email.com';
+
+  const password = '123456';
+
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -26,15 +32,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should not be able to create a new user with an email already registered', async () => {
-    const user = new User();
-
-    user.id = v4();
-    user.name = 'Paul Airon';
-    user.email = 'paul@email.com';
-    user.password = '123456';
-    user.salt = 'passwordSalt';
-
-    await fakeUsersRepository.save(user);
+    await fakeUsersRepository.create({ name, email, password });
 
     await expect(
       createUserUseCase.execute({
@@ -45,13 +43,24 @@ describe('CreateUserUseCase', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to create a new user', async () => {
-    const email = 'paul@email.com';
+  it('should call method to hash the password and save the hashed password', async () => {
+    const generateHashSpy = jest.spyOn(fakeHashProvider, 'generateHash');
 
-    const createdUser = await createUserUseCase.execute({
-      name: 'Paul Airon',
+    const user = await createUserUseCase.execute({
+      name,
       email,
-      password: '123456',
+      password,
+    });
+
+    expect(generateHashSpy).toHaveBeenCalledWith(password);
+    expect(user.password === password).toBeFalsy();
+  });
+
+  it('should be able to create a new user', async () => {
+    const createdUser = await createUserUseCase.execute({
+      name: 'Paul Mark',
+      email,
+      password: '777888',
     });
 
     const foundedUser = await fakeUsersRepository.findByEmail(email);
