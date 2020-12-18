@@ -4,6 +4,7 @@ import { AppError } from '@shared/errors/AppError';
 import { IShortsterRepository } from '../../repositories/IShortsterRepository';
 
 interface IResponse {
+  url: string;
   created_at: Date;
   last_access: Date;
   times_accessed: number;
@@ -23,9 +24,10 @@ export class ShortsterStatsUseCase {
       throw new AppError('no shortster found for the given id');
     }
 
-    const { created_at, last_access, times_accessed } = shortster;
+    const { created_at, last_access, times_accessed, url } = shortster;
 
     return {
+      url,
       created_at,
       last_access,
       times_accessed,
