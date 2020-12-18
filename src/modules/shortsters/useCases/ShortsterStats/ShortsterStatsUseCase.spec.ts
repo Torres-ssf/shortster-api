@@ -40,7 +40,7 @@ describe('ShortsterStatsUseCase', () => {
     ).rejects.toHaveProperty('message', 'no shortster found for the given id');
   });
 
-  it('created_at, last_access should be typeof Date', async () => {
+  it('should return created_at, last_access, and times_accessed properties', async () => {
     const { code } = await createShortsterUseCase.execute({ url: googleUrl });
 
     const resp = await getShortsterUseCase.execute(code);
