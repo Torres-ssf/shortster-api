@@ -40,13 +40,22 @@ describe('ShortsterStatsUseCase', () => {
     ).rejects.toHaveProperty('message', 'no shortster found for the given id');
   });
 
-  it('should return created_at, last_access, and times_accessed properties', async () => {
-    const { code } = await createShortsterUseCase.execute({ url: googleUrl });
+  it('should return url, created_at, last_access, and times_accessed properties', async () => {
+    const {
+      code,
+      created_at,
+      url,
+      last_access,
+      times_accessed,
+    } = await createShortsterUseCase.execute({ url: googleUrl });
 
-    const resp = await getShortsterUseCase.execute(code);
+    const resp = await shortsterStatsUseCase.execute(code);
 
-    expect(resp).toHaveProperty('created_at');
-    expect(resp).toHaveProperty('last_access');
-    expect(resp).toHaveProperty('times_accessed');
+    expect(resp).toStrictEqual({
+      created_at,
+      url,
+      last_access,
+      times_accessed,
+    });
   });
 });
