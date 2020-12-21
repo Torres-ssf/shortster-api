@@ -1,12 +1,13 @@
 import { inject, injectable } from 'tsyringe';
+import { format } from 'date-fns';
 
 import { AppError } from '@shared/errors/AppError';
 import { IShortsterRepository } from '../../repositories/IShortsterRepository';
 
 interface IResponse {
   url: string;
-  created_at: Date;
-  last_access: Date;
+  created_at: string;
+  last_access: string;
   times_accessed: number;
 }
 
@@ -28,8 +29,8 @@ export class ShortsterStatsUseCase {
 
     return {
       url,
-      created_at,
-      last_access,
+      created_at: format(created_at, 'PPPppp'),
+      last_access: format(last_access, 'PPPppp'),
       times_accessed,
     };
   }
