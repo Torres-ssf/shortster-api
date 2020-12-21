@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 import { FakeShortstersRepository } from '@modules/shortsters/repositories/fakes/FakeShortsterRepository';
 import { FakeUsersRepository } from '@modules/users/repositories/fakes/FakeUsersRepository';
+import { format } from 'date-fns';
 import { ShortsterStatsUseCase } from './ShortsterStatsUseCase';
 import { CreateShortsterUseCase } from '../CreateShortster/CreateShortsterUseCase';
 import { GetShortsterUseCase } from '../GetShortster/GetShortsterUseCase';
@@ -51,10 +52,13 @@ describe('ShortsterStatsUseCase', () => {
 
     const resp = await shortsterStatsUseCase.execute(code);
 
+    const createAtFormatted = format(created_at, 'PPPppp');
+    const updatedAtFormatted = format(last_access, 'PPPppp');
+
     expect(resp).toStrictEqual({
-      created_at,
       url,
-      last_access,
+      created_at: createAtFormatted,
+      last_access: updatedAtFormatted,
       times_accessed,
     });
   });
