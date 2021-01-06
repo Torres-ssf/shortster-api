@@ -24,28 +24,34 @@ export class CreateSessionUseCase {
   async execute(createSession: CreateSessionDTO): Promise<IResponse> {
     const { email, password } = createSession;
 
-    const user = await this.usersRepository.findByEmail(email);
+    try {
+      const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) {
-      throw new AppError('wrong email/password combination', 403);
+      if (!user) {
+        throw new AppError('wrong email/password combination', 403);
+      }
+
+      const passwordMatch = await this.hashProvider.compare({
+        payload: password,
+        hashed: user.password,
+      });
+
+      if (!passwordMatch) {
+        throw new AppError('wrong email/password combination', 403);
+      }
+
+      const { secret, expiresIn } = auth.jwt;
+
+      const token = sign({}, secret as string, {
+        subject: user.id,
+        expiresIn,
+      });
+
+      return { user, token };
+    } catch (err) {
+      throw new AppError(
+        err.message || 'Error occurred while trying to create new user.',
+      );
     }
-
-    const passwordMatch = await this.hashProvider.compare({
-      payload: password,
-      hashed: user.password,
-    });
-
-    if (!passwordMatch) {
-      throw new AppError('wrong email/password combination', 403);
-    }
-
-    const { secret, expiresIn } = auth.jwt;
-
-    const token = sign({}, secret as string, {
-      subject: user.id,
-      expiresIn,
-    });
-
-    return { user, token };
   }
 }
