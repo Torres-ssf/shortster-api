@@ -68,9 +68,11 @@ Testing Frameworks
 
 - Body Params
 
-  - ```sh
-    url: (required) URL from the desired webpage.
-    code: (optional) Custom code for the desired shortster.
+  - ```JS
+    {
+      "url": "https://www.google.com",   //required
+      "code": "myCustomCode99"   //optional: The user can pick a desired shortster code.
+    }
     ```
 
 - Response Object Example
@@ -94,14 +96,17 @@ Testing Frameworks
 ```
 
 - Description
+
   - Route to access Shortster URL. The system will return an object containing the URL and all    information related to the given Shortster code.
 
 - Route Params
+
   - ```sh
     code: Shortster code.
     ```
 
 - Response Object Example
+
   - ```JS
     {
       "id": "25063285-6e4d-4256-b512-d6401ab3e863",
@@ -123,20 +128,54 @@ Testing Frameworks
 ```
 
 - Description
+
   - Route to access Shortster stats. The response it's an object with relevant information about the Shortster like, the URL, how many times it was used, and also friendly formatted dates like, when it was created, and when it was last used.
 
 - Route Params
+
   - ```sh
     code: Shortster code.
     ```
 
 - Response Object Example
+
   - ```JS
     {
       "url": "https://google.com",
       "created_at": "January 6th, 2021 at 8:39:22 PM GMT-3",
       "last_access": "January 6th, 2021 at 9:02:17 PM GMT-3",
       "times_accessed": 9
+    }
+    ```
+
+4. `Post` Create User
+
+```sh
+/users
+```
+
+- Description
+
+  - Creates a new User into to the system. The response is an object containing all information related to the newly created User.
+
+- Body Params
+
+  - ```JS
+    {
+      "name": "Sergio Torres",   //required
+      "email": "sergio@email.com",   //required
+      "password": ".Zxc3518"   //required
+    }
+    ```
+
+- Response Object Example
+  - ```JS
+    {
+      "id": "9f050eae-720f-4edd-a609-c4c42e12e34f",
+      "name": "Sergio Torres",
+      "email": "sergio@email.com",
+      "created_at": "2021-01-06T23:39:44.480Z",
+      "updated_at": "2021-01-06T23:39:44.480Z"
     }
     ```
 
