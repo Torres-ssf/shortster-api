@@ -64,7 +64,7 @@ Testing Frameworks
 
 - Description
 
-  - Creates a new Shortster object into the system.
+  - Creates a new Shortster object into the system. This route does not requires authentication, but verifies if a JSON web token was provided within the request header. If a token is found, then it will try to extract the user ID from it and assign it to the Shortster object. If no token is found the Shortster will be created with a null value for the `user_id` property. A JSON web token can be created using the create session route.
 
 - Body Params
 
@@ -74,6 +74,14 @@ Testing Frameworks
       "code": "myCustomCode99"   //optional: The user can pick a desired shortster code.
     }
     ```
+
+- Header
+  - ```JS
+    {
+      "authorization": "Bearer ${token_value}",   //required
+    }
+    ```
+
 
 - Response Object Example
   - ```JS
@@ -176,6 +184,39 @@ Testing Frameworks
       "email": "sergio@email.com",
       "created_at": "2021-01-06T23:39:44.480Z",
       "updated_at": "2021-01-06T23:39:44.480Z"
+    }
+    ```
+
+5. `Post` Create Session
+
+```sh
+/session
+```
+
+- Description
+
+  - Creates a new Session into to the system. The response is an object containing all information about the user and a JSON web token. The token is going to be used to verify user authentication on routes that require authentication. Right now, no routes within the app requires authentication. This was implemented to be used in features that are going to be implemented in the future, like updating User information, get all created shortsters by an user, try to change a shortster code and so on.
+
+- Body Params
+
+  - ```JS
+    {
+      "email": "sergio@email.com",   //required
+      "password": ".Zxc3518"   //required
+    }
+    ```
+
+- Response Object Example
+  - ```JS
+    {
+      "user": {
+        "id": "9f050eae-720f-4edd-a609-c4c42e12e34f",
+        "name": "Sergio Torres",
+        "email": "sergio@email.com",
+        "created_at": "2021-01-06T23:39:44.480Z",
+        "updated_at": "2021-01-06T23:39:44.480Z"
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTAwMjg0NDUsImV4cCI6MTYxMDAzMjA0NSwic3ViIjoiOWYwNTBlYWUtNzIwZi00ZWRkLWE2MDktYzRjNDJlMTJlMzRmIn0.IOPVfrHmoFOa96S7R61LmODwW8KB-sONHB5-fhbT3Io"
     }
     ```
 
