@@ -8,7 +8,7 @@
 <br />
 <p align="center">
 
-  <img src="logo.png" alt="Logo" width="269" height="98">
+  <img src="logo.png" alt="Logo" width="120" height="120">
 
   <h3 align="center">Shortster API</h3>
 
