@@ -25,7 +25,7 @@
 
 ## About The Project
 
-This project is a RESTful API with the functionality to create URL Shortsters, a short code to replace URL long links.
+This project is a RESTful API with the functionality to create URL Shortsters, a short code to replace URL long links. A simple webpage was created to consume this API and it can be found [here](https://github.com/Torres-ssf/shortster-web).
 
 ## Features
 
