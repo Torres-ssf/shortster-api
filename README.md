@@ -294,7 +294,7 @@ yarn
     - Assign your postgres password to the `password` object.
     - Create a new postgres database and assign the name to the `database` object.
 
-5. Run migrate command to create all migrations.
+5.Command to create all migrations.
 ```
 yarn typeorm migration:run
 ```
@@ -312,7 +312,7 @@ yarn typeorm migration:run
 App Scripts:
 
 ```
-yarn dev:server
+yarn start:dev
 ```
 
 - Script for development stage. If all the installation section was properly made, an output message will appear at the terminal: `Server started on port 3333!`
