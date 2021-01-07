@@ -54,6 +54,20 @@ Testing Frameworks
 
 - [Jest](https://www.npmjs.com/package/jest)
 
+## Routes
+
+1. Create Shortster
+
+```sh
+/shortster
+```
+
+- Body Params
+```sh
+url: (required) URL from the desired webpage.
+code: (optional) Custom code for the desired shortster.
+```
+
 
 <!-- GETTING STARTED -->
 
@@ -88,16 +102,18 @@ yarn
 ```
 
 4. Set up databases
-  This project uses `Postgres`. You will need to have it running into your system.
-  - Make a copy of the `ormconfig.example.json` file and remove the ```.example```.
+  This project uses `Postgres`.
+
+  You will need to have it running into your system:
+  - Make a copy of the `ormconfig.example.json` file and rename it to ```ormconfig.json```.
   - Assign values according with the postgres configuration in your system.
 
   - Setting up PostgreSQL
     ```json
     "port": 5432,
-      "username": "postgres username",
-      "password": "postgres password",
-      "database": "database name",
+    "username": "postgres username",
+    "password": "postgres password",
+    "database": "database name",
     ```
     - Assign the port number that was configured in your system to the `port` object (default is `5432`).
     - Assign your postgres username to the `username` object.
@@ -111,7 +127,7 @@ yarn typeorm migration:run
 
 6. This applications uses `jsonwebtokenNow` to grant an access token to logged users.
   - You will need to provide a MD5 hash from an encoded string from your choice. You can generate the hash [here](https://www.md5hashgenerator.com/).
-  - With the hash in hands, we are ready to setup the environment variables. Make a copy of the `.env.example` to and name it `.env`.
+  - With the hash in hands, we are ready to setup the environment variables. Make a copy of the `.env.example` to and rename it `.env`.
   - Assign your generated hash to the variable
   ```
   APP_SECRET=generatedMD5HashHere
