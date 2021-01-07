@@ -27,6 +27,28 @@
 
 This project is a RESTful API with the functionality to create URL Shortsters, a short code to replace URL long links.
 
+## Features
+
+1. Shortster can be created, providing or not a custom code.
+
+2. Created shortster can be accessed by their code, in order to receive the URL.
+
+3. Shortster stats can be accessed to receive friendly formatted data related to the shortster.
+
+4. Users can sign-up within the server.
+
+5. Users can create sessions to receive an authorization token.
+
+#### Future features (soon)
+
+1. Logged users are going to be able to access a list with their own shortsters.
+
+2. Logged users are going to be able to update their own info.
+
+3. Logged users are going to be able to customize their created shortster codes.
+
+4. Logged users are going to be able to delete their own shortster code.
+
 ### Built With
 
 The project was built using the following languages stacks:
@@ -78,7 +100,7 @@ Testing Frameworks
 - Header
   - ```JS
     {
-      "authorization": "Bearer ${token_value}",   //required
+      "authorization": "Bearer ${token_value}",   //optional
     }
     ```
 
