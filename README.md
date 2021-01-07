@@ -63,13 +63,29 @@ Testing Frameworks
 ```
 
 - Description
-Creates a new Shortster into the system.
+
+  - Creates a new Shortster object into the system.
 
 - Body Params
-```sh
-url: (required) URL from the desired webpage.
-code: (optional) Custom code for the desired shortster.
-```
+
+  - ```sh
+    url: (required) URL from the desired webpage.
+    code: (optional) Custom code for the desired shortster.
+    ```
+
+- Response Object Example
+  - ```JS
+    {
+      "id": "25063285-6e4d-4256-b512-d6401ab3e863",
+      "code": "2ziejQ",
+      "url": "https://google.com",
+      "last_access": "2021-01-07T00:02:17.564Z",
+      "times_accessed": 9,
+      "user_id": null,
+      "created_at": "2021-01-06T23:39:22.374Z",
+      "updated_at": "2021-01-07T03:02:17.566Z"
+    }
+    ```
 
 2. `Get` Shortster
 
@@ -78,13 +94,51 @@ code: (optional) Custom code for the desired shortster.
 ```
 
 - Description
-Route to access Shortster URL. The system will redirect the user to the Shortster URL.
+  - Route to access Shortster URL. The system will return an object containing the URL and all    information related to the given Shortster code.
 
 - Route Params
+  - ```sh
+    code: Shortster code.
+    ```
+
+- Response Object Example
+  - ```JS
+    {
+      "id": "25063285-6e4d-4256-b512-d6401ab3e863",
+      "code": "2ziejQ",
+      "url": "https://google.com",
+      "last_access": "2021-01-07T00:02:17.564Z",
+      "times_accessed": 9,
+      "user_id": null,
+      "created_at": "2021-01-06T23:39:22.374Z",
+      "updated_at": "2021-01-07T03:02:17.566Z"
+    }
+    ```
+
+
+3. `Get` Shortster Stats
+
 ```sh
-code: Shortster code
+/shortster/:code/stats
 ```
 
+- Description
+  - Route to access Shortster stats. The response it's an object with relevant information about the Shortster like, the URL, how many times it was used, and also friendly formatted dates like, when it was created, and when it was last used.
+
+- Route Params
+  - ```sh
+    code: Shortster code.
+    ```
+
+- Response Object Example
+  - ```JS
+    {
+      "url": "https://google.com",
+      "created_at": "January 6th, 2021 at 8:39:22 PM GMT-3",
+      "last_access": "January 6th, 2021 at 9:02:17 PM GMT-3",
+      "times_accessed": 9
+    }
+    ```
 
 <!-- GETTING STARTED -->
 
@@ -118,7 +172,8 @@ cd shortster-api/
 yarn
 ```
 
-4. Set up databases
+4. Set up databases:
+
   This project uses `Postgres`.
 
   You will need to have it running into your system:
