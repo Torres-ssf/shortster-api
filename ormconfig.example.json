@@ -7,7 +7,7 @@
   "password": "password",
   "database": "db_name",
   "entities": [
-    "./src/modules/**/entity/*.ts"
+    "./src/modules/**/entities/*.ts"
   ],
   "migrations": [
     "./src/shared/database/migrations/*.ts"
