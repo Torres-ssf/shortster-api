@@ -56,16 +56,33 @@ Testing Frameworks
 
 ## Routes
 
-1. Create Shortster
+1. `POST` Create Shortster
 
 ```sh
 /shortster
 ```
 
+- Description
+Creates a new Shortster into the system.
+
 - Body Params
 ```sh
 url: (required) URL from the desired webpage.
 code: (optional) Custom code for the desired shortster.
+```
+
+2. `Get` Shortster
+
+```sh
+/shortster/:code
+```
+
+- Description
+Route to access Shortster URL. The system will redirect the user to the Shortster URL.
+
+- Route Params
+```sh
+code: Shortster code
 ```
 
 
