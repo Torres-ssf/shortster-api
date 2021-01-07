@@ -22,48 +22,50 @@ export class CreateShortsterUseCase {
 
     let { code } = createShortsterDTO;
 
-    if (code) {
-      const shortsterExists = await this.shortsterRepository.findByCode(code);
-
-      if (shortsterExists) {
-        throw new AppError('shortster code already in use');
-      }
-    } else {
-      code = generateShortsterCode();
-    }
-
     try {
+      if (code) {
+        const shortsterExists = await this.shortsterRepository.findByCode(code);
+
+        if (shortsterExists) {
+          throw new AppError('shortster code already in use');
+        }
+      } else {
+        code = generateShortsterCode();
+      }
+
       await axios.get(url);
-    } catch (err) {
-      throw new AppError('webpage does not exist');
-    }
 
-    if (user_id) {
-      const existentUser = await this.usersRepository.findById(user_id);
+      if (user_id) {
+        const existentUser = await this.usersRepository.findById(user_id);
 
-      if (!existentUser) {
-        throw new AppError('no user was found for the given user id');
+        if (!existentUser) {
+          throw new AppError('no user was found for the given user id');
+        }
       }
-    }
 
-    const shortster = new Shortster();
+      const shortster = new Shortster();
 
-    const currentTime = new Date();
+      const currentTime = new Date();
 
-    Object.assign(shortster, {
-      id: v4(),
-      code,
-      url,
-      user_id: user_id || null,
-      times_accessed: 0,
-      last_access: currentTime,
-      created_at: currentTime,
-      updated_at: currentTime,
-    });
+      Object.assign(shortster, {
+        id: v4(),
+        code,
+        url,
+        user_id: user_id || null,
+        times_accessed: 0,
+        last_access: currentTime,
+        created_at: currentTime,
+        updated_at: currentTime,
+      });
 
-    try {
-      return this.shortsterRepository.save(shortster);
+      await this.shortsterRepository.save(shortster);
+
+      return shortster;
     } catch (err) {
+      if (err.code === 'ENOTFOUND') {
+        throw new AppError('webpage does not exist');
+      }
+
       throw new AppError(
         err.message || 'error occurred while trying to create new shortster.',
       );

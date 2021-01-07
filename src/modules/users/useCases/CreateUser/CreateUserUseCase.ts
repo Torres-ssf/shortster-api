@@ -17,21 +17,22 @@ export class CreateUserUseCase {
 
   async execute(createUser: CreateUserDTO): Promise<User> {
     const { name, email, password } = createUser;
-
-    const userExists = await this.usersRepository.findByEmail(email);
-
-    if (userExists) {
-      throw new AppError('Email already taken');
-    }
-
-    const hashedPassword = await this.hashProvider.generateHash(password);
-
     try {
-      return this.usersRepository.create({
+      const userExists = await this.usersRepository.findByEmail(email);
+
+      if (userExists) {
+        throw new AppError('Email already taken');
+      }
+
+      const hashedPassword = await this.hashProvider.generateHash(password);
+
+      const user = await this.usersRepository.create({
         name,
         email,
         password: hashedPassword,
       });
+
+      return user;
     } catch (err) {
       throw new AppError(
         err.message || 'Error occurred while trying to create new user.',
